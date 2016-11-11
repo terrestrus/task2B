@@ -14,21 +14,28 @@ app.get('/task2B', (req, res) => {
   let name = '';
 
  let n = req.query.fullname.split(" ");
- if (n.length > 3) {
-   res.send('Invalid fullname');
- }
+
   name = n[n.length - 1] + " ";
   if (n.length == 3) {
     for (let i = 0; i < 2; i++) {
         console.log(n[i]);
-       name += n[i].slice(0,1)+"."+ " ";
+        if (n[i] == 1) {
+           name += n[i].slice(0,1)+"."
+        } else {
+           name += n[i].slice(0,1)+"."+ " ";
+        }
+
   }
 }
   if (n.length == 2) {
     for (let i = 0; i < 1; i++) {
         console.log(n[i]);
-       name += n[i].slice(0,1)+"."+ " ";
+
+       name += n[i].slice(0,1)+".";
   }
+}
+if (n.length > 3) {
+  name = 'Invalid fullname';
 }
 
   console.log(n);
@@ -44,4 +51,19 @@ const sum = (+req.query.a || 0) + (+req.query.b || 0);
 });
 app.listen(3000, () => {
   console.log('Your app listening on port 3000!');
+});
+
+app.get('/task2C', (req, res) => {
+const reg = new RegExp('@?(https?:)?(\/\/)?((telegram|vk|vkontakte|www.vk|twitter|github)[^\/]*\/)?([a-zA-Z0-9]*)', 'i');
+
+ if (req.query.username) {
+ const username = req.query.username.match(reg)
+   if (username) {
+     let user = '@'+username[5]
+     res.send(user);
+   }
+
+ }
+
+
 });
