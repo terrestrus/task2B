@@ -10,36 +10,20 @@ app.get('/', (req, res) => {
   });
 });
 app.get('/task2B', (req, res) => {
+  let fullName = req.query.fullname || '';
+   let arr = fullName.split(' ');
+   let len = arr.length;
 
-  let name = '';
+   if (fullName === '' || len > 3 || /\d|_|\//.test(fullName)) {
+     fullName = 'Invalid fullname';
+   } else {
+     fullName = arr[len - 1];
+     for (let i = 0; i < len - 1; i++ ) {
+       fullName += ' ' + arr[i].slice(0, 1) + '.';
+     }
+   }
 
- let n = req.query.fullname.split(" ");
-
-  name = n[n.length - 1] + " ";
-  if (n.length == 3) {
-    for (let i = 0; i < 2; i++) {
-        console.log(n[i]);
-        if (n[i] == 1) {
-           name += n[i].slice(0,1)+"."
-        } else {
-           name += n[i].slice(0,1)+"."+ " ";
-        }
-
-  }
-}
-  if (n.length == 2) {
-    for (let i = 0; i < 1; i++) {
-        console.log(n[i]);
-
-       name += n[i].slice(0,1)+".";
-  }
-}
-if (n.length > 3) {
-  name = 'Invalid fullname';
-}
-
-  console.log(n);
-  res.send(name);
+   res.send(fullName);
 
 });
 
